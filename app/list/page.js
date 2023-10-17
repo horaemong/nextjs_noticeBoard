@@ -9,7 +9,7 @@ export default async function List() {
     <div className="list-bg">
       {result.map((post, index) => {
         return (
-          <Link href={"/detail/" + post._id.toString()} key={index}>
+          <Link href={"/detail/" + post._id.toString()} key={index} prefetch={false}>
             <div className="list-item">
               <h4>{post.title}</h4>
               <p>{post.content}</p>
