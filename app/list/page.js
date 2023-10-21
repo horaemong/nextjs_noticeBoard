@@ -1,22 +1,16 @@
 import { connectDB } from "@/util/database";
-import Link from "next/link";
+import ListItem from "./ListItem";
 
 export default async function List() {
   let db = (await connectDB).db("notice_board");
   let result = await db.collection("post").find().toArray();
-
+  result = result.map((a) => {
+    a._id = a._id.toString();
+    return a;
+  });
   return (
     <div className="list-bg">
-      {result.map((post, index) => {
-        return (
-          <Link href={"/detail/" + post._id.toString()} key={index} prefetch={false}>
-            <div className="list-item">
-              <h4>{post.title}</h4>
-              <p>{post.content}</p>
-            </div>
-          </Link>
-        );
-      })}
+      <ListItem result={result} />
     </div>
   );
 }
